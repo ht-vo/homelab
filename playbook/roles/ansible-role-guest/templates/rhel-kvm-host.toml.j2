@@ -1,0 +1,35 @@
+name = "{{ blueprint_name }}"
+description = "{{ blueprint_description }}"
+version = "{{ blueprint_version }}"
+distro = "{{ blueprint_host_distro }}"
+
+[customizations]
+hostname = "{{ blueprint_host_name }}"
+
+[customizations.locale]
+languages = ["en_US.UTF-8"]
+keyboard = "us"
+
+[customizations.timezone]
+timezone = "{{ blueprint_ntp_timezone }}"
+ntpservers = ["{{ blueprint_ntp_servers | map('quote') | join('\", \"') }}"]
+
+[[customizations.user]]
+name = "{{ blueprint_host_user_name }}"
+password = "{{ blueprint_host_user_pass }}"
+key = "{{ blueprint_host_ssh_pubkey }}"
+home = "/home/{{ blueprint_host_user_name }}"
+shell = "/usr/bin/bash"
+groups = ["ssh-users", "users", "wheel"]
+uid = 1001
+gid = 1001
+
+[[customizations.group]]
+name = "ssh-users"
+gid = 2000
+
+{% for package in blueprint_host_packages %}
+[[packages]]
+name = "{{ package }}"
+
+{% endfor %}

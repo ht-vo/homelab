@@ -1,0 +1,28 @@
+---
+blueprint_name: 'rhel-kvm-host'
+blueprint_description: "A blueprint for creating a Red Hat Linux Entreprise image"
+blueprint_version: '1.0.0'
+blueprint_host_name: ''
+blueprint_host_distro: 'rhel-9.5' # composer-cli distros list
+blueprint_host_packages:
+  - jq
+  - vim-enhanced
+  - subscription-manager-cockpit
+  - cockpit-storaged
+  - cockpit-podman
+  - cockpit-machines
+  - libvirt
+  - libguestfs-tools
+  - qemu-kvm
+  - virt-install
+  - virt-top
+  - virt-viewer
+blueprint_ntp_timezone: 'Europe/Paris'
+blueprint_ntp_servers:
+  - 0.fr.pool.ntp.org
+  - 1.fr.pool.ntp.org
+  - 2.fr.pool.ntp.org
+  - 3.fr.pool.ntp.org
+blueprint_host_user_name: ''
+blueprint_host_user_pass: ''
+blueprint_host_ssh_pubkey: ''

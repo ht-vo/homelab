@@ -1,0 +1,6 @@
+---
+- name: Enable osbuild-composer service
+  ansible.builtin.service:
+    name: osbuild-composer.socket
+    enabled: true
+    state: started

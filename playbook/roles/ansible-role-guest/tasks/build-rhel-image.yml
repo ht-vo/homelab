@@ -1,0 +1,11 @@
+---
+- name: Create {{ blueprint_name }} blueprint
+  ansible.builtin.template:
+    src: rhel-kvm-host.toml.j2
+    dest: /tmp/rhel-kvm-host.toml
+
+- name: Push {{ blueprint_name }} blueprint to Image Builder
+  ansible.builtin.shell: composer-cli blueprints push /tmp/rhel-kvm-host.toml
+
+- name: Build the {{ blueprint_name }} blueprint
+  ansible.builtin.shell: composer-cli compose start {{ blueprint_name }} image-installer

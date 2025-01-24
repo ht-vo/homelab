@@ -1,0 +1,9 @@
+---
+- name: Install Image Builder
+  ansible.builtin.dnf:
+    name:
+      - osbuild-composer
+      - composer-cli
+    state: present
+  notify:
+    - Enable osbuild-composer service
