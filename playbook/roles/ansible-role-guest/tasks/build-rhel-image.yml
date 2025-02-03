@@ -4,6 +4,15 @@
     src: rhel-kvm-host.toml.j2
     dest: /tmp/rhel-kvm-host.toml
 
+- name: Check if the {{ blueprint_name }} blueprint exists
+  ansible.builtin.shell: composer-cli blueprints list
+  register: blueprints_list
+
+- name: Delete the previous {{ blueprint_name }} blueprint
+  ansible.builtin.shell: composer-cli blueprints delete {{ blueprint_name }}
+  when:
+    - 'blueprint_name in blueprints_list.stdout'
+
 - name: Push {{ blueprint_name }} blueprint to Image Builder
   ansible.builtin.shell: composer-cli blueprints push /tmp/rhel-kvm-host.toml
 
