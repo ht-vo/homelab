@@ -1,0 +1,6 @@
+---
+# See available parameters in ../roles/ansible-role-guest/default/main.yml file
+blueprint_host_name: ''
+blueprint_host_user_name: ''
+blueprint_host_user_pass: ''
+blueprint_host_ssh_pubkey: ''
