@@ -18,3 +18,9 @@
 
 - name: Build the {{ blueprint_name }} blueprint
   ansible.builtin.shell: composer-cli compose start {{ blueprint_name }} image-installer
+  register: build_output
+
+- name: Convert build_output.stdout into a list
+  ansible.builtin.set_fact:
+    build_uuid: "{{ build_output.stdout | split(' ') }}"
+  no_log: yes
