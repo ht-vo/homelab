@@ -33,3 +33,34 @@ gid = 2000
 name = "{{ package }}"
 
 {% endfor %}
+
+[[customizations.files]]
+path = "/usr/local/bin/custom_first_boot.sh"
+mode = "0755"
+data = """
+#!/bin/bash
+
+# Disable SELinux
+sed -i 's/enforcing/disabled/g' /etc/selinux/config
+"""
+
+[[customizations.files]]
+path = "/etc/systemd/system/custom-first-boot.service"
+data = """
+[Unit]
+ConditionPathExists=/usr/local/bin/custom_first_boot.sh
+Wants=network-online.target
+After=network-online.target
+After=osbuild-first-boot.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/custom_first_boot.sh
+ExecStartPost=mv /usr/local/bin/custom_first_boot.sh /usr/local/bin/custom_first_boot.sh.bak
+
+[Install]
+WantedBy=multi-user.target
+"""
+
+[customizations.services]
+enabled = ["custom-first-boot"]
